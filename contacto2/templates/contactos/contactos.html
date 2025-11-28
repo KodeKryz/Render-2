@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Contactos</title>
+    <style>
+        body{ font-family: Arial, sans-serif; padding: 2rem }
+        table{ border-collapse: collapse; width: 100% }
+        th, td{ border: 1px solid #ddd; padding: 8px }
+        th{ background:#f4f4f4 }
+    </style>
+</head>
+<body>
+    <h1>Contactos</h1>
+
+    {% if request.session.external_api_user %}
+        <p>Usuario (API externa): <strong>{{ request.session.external_api_user }}</strong></p>
+    {% elif user %}
+        <p>Usuario: <strong>{{ user.username }}</strong></p>
+    {% else %}
+        <p>No autenticado</p>
+    {% endif %}
+
+    {% if productos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            {% if p.nombre %}{{ p.nombre }}
+                            {% elif p.name %}{{ p.name }}
+                            {% else %}-{% endif %}
+                        </td>
+                        <td>
+                            {% if p.email %}{{ p.email }}
+                            {% elif p.correo %}{{ p.correo }}
+                            {% elif p.mail %}{{ p.mail }}
+                            {% else %}-{% endif %}
+                        </td>
+                        <td>
+                            {% if p.telefono %}{{ p.telefono }}
+                            {% elif p.phone %}{{ p.phone }}
+                            {% else %}-{% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Datos crudos (debug)</h3>
+        <pre style="background:#f8f8f8;border:1px solid #ddd;padding:1rem;white-space:pre-wrap;">{{ productos_json }}</pre>
+    {% else %}
+        <p>No se encontraron contactos.</p>
+    {% endif %}
+
+</body>
+</html>

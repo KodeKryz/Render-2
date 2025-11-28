@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Login</title>
+	<style>
+		body{ font-family: Arial, sans-serif; padding: 2rem }
+		form{ max-width: 320px }
+		label{ display:block; margin-top:0.5rem }
+	</style>
+</head>
+<body>
+	<h1>Iniciar sesión</h1>
+	{% if messages %}
+		<ul>
+		{% for m in messages %}
+			<li style="color: red">{{ m }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+	<form method="post">
+		{% csrf_token %}
+		<label>Usuario
+			<input type="text" name="username" required>
+		</label>
+		<label>Contraseña
+			<input type="password" name="password" required>
+		</label>
+		<button type="submit">Entrar</button>
+	</form>
+    
+</body>
+</html>
